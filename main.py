@@ -56,6 +56,7 @@ sword_icon = "Sword.png"
 inventory = [None] * 10
 custom_icons = None
 dice = (1 ,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
+
 dice_sound = aud.Sound('D:\Work\Python\RPG_CLICKER_BLENDER\sound\dice-142528.mp3')
 device = aud.Device()
 
@@ -98,6 +99,18 @@ class SimplePanel(bpy.types.Panel):
         # Bouton pour ajouter un objet aléatoire
         layout.operator("inventory.add_random_item", text="Roll dice")
         layout.label(text = f"result = {launch}")
+        
+        """
+        #Grid
+        layout = self.layout
+        box = layout.box()  # Optional: Create a bordered box for the grid
+
+        # Create the grid structure
+        for row in range(4):  # Number of rows
+            row_layout = box.row()
+            for col in range(3):  # Number of columns
+                row_layout.operator("object.select_all", text=f"({row}, {col})")
+        """        
         
 # Opérateur pour ajouter un objet aléatoire
 class AddRandomItemOperator(bpy.types.Operator):
