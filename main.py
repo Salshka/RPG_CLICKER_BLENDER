@@ -51,14 +51,17 @@ items = {
 }
 
     #### VARIABLES #####
+base_dir = os.path.dirname('main')
+print(f"Base Directory: {base_dir}")
 icon_dir = "D:\Work\Python\RPG_CLICKER\icon"
 sword_icon = "Sword.png"
 inventory = [None] * 10
 custom_icons = None
 dice = (1 ,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
-
-dice_sound = aud.Sound('D:\Work\Python\RPG_CLICKER_BLENDER\sound\dice-142528.mp3')
+sound_path = os.path.join(base_dir, "sound", "dice-142528.mp3")
+dice_sound = aud.Sound(sound_path)
 device = aud.Device()
+print(sound_path)
 
     #### ADD RANDOM ITEM ####
 def add_random_item_to_inventory():
