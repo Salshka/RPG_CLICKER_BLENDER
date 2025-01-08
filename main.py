@@ -1,7 +1,7 @@
 import bpy
 import random 
 import os
-
+import aud
 
     #### Dictionary ####
 items = {
@@ -56,7 +56,7 @@ sword_icon = "Sword.png"
 inventory = [None] * 10
 custom_icons = None
 dice = (1 ,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
-
+dice_sound = aud.Sound('dice-142528.mp3')
 
 
     #### ADD RANDOM ITEM ####
