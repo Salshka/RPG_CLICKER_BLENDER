@@ -56,8 +56,8 @@ sword_icon = "Sword.png"
 inventory = [None] * 10
 custom_icons = None
 dice = (1 ,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
-dice_sound = aud.Sound('dice-142528.mp3')
-
+dice_sound = aud.Sound('D:\Work\Python\RPG_CLICKER_BLENDER\sound\dice-142528.mp3')
+device = aud.Device()
 
     #### ADD RANDOM ITEM ####
 def add_random_item_to_inventory():
@@ -67,7 +67,7 @@ def add_random_item_to_inventory():
     
     global launch #can be call to another func
     launch = random.choice(dice)
-    
+    handle = device.play(dice_sound)
     if  launch >= 18:
         for i in range(len(inventory)):
             if inventory[i] is None:  # Empty Emplacement
