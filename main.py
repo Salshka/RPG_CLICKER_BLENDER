@@ -62,6 +62,7 @@ device = aud.Device()
 # ICONS
 icon_dir = "D:\Work\Python\RPG_CLICKER_BLENDER\icon"
 sword_icon = (icon_dir, "Sword.png")
+bow_icon  = (icon_dir, 'bow.png')
 
     #### ADD RANDOM ITEM ####
 def add_random_item_to_inventory():
@@ -138,12 +139,15 @@ if __name__ == "__main__":
 
 
     #### ICON #####
-def load_custom_icon():
-    custom_icons = bpy.utils.previews.new()
-    file_path = os.path.join(icon_dir, sword_icon)
+class ICONS():
+    def load_custom_icon():
+        custom_icons = bpy.utils.previews.new()
+        file_path = os.path.join(icon_dir, sword_icon)
     
     
-def draw(self, context):
-    if 'sword' in INVENTORY:
-        load(file_path)
-        
+    def draw(self, context):
+        #if 'sword' in INVENTORY:
+            #load(file_path)
+            
+        bpy.data.images.load
+        layout.box(bow_icon)
