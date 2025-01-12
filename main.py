@@ -1,16 +1,17 @@
 import bpy
 import random 
 import os
+import sys
 import aud
 
     #### Dictionary ####
+
 items = {
     "sword": {
         "id": 1,
         "name":"sword",
         "type": "weapon",
-        "mesh": "Cube",
-        "icon": "sword_icon",
+        "icon": "sword_icon"
     },
     "shield": {
         "id": 2,
@@ -21,51 +22,61 @@ items = {
         "id": 3,
         "name":"bow",
         "type": "weapon",
+        "icon": "icon/bow.png",
     },
     "ring": {
         "id": 4,
         "name":"ring",
         "type": "accessory",
+        "icon": "icon/bow.png"
     },
     "parchment": {
         "id": 5,
         "name":"parchment",
         "type": "artifact",
+        "icon": "icon/bow.png",
     },
     "dagger": {
         "id": 6,
         "name":"dagger",
         "type": "weapon",
+        "icon": "icon/bow.png"
     },
     "helmet": {
         "id": 7,
         "name":"helmet",
         "type": "armor",
-        "icon": "Helmet.png",
+        "icon": "icon/bow.png"
     },
     "potion": {
         "id": 8,
         "name":"potion",
         "type": "accessory",
+        "icon": "icon/bow.png"
     }
 }
 
     #### VARIABLES #####
-    
-base_dir = os.path.dirname('main')
+
+#import items
+#from data import items 
+
+#base_dir = os.path.dirname('main')
+base_dir = os.path.dirname(bpy.data.filepath)
+
 inventory = [None] * 10
 custom_icons = None
 dice = (1 ,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
 launch = None
-#SOUND
-#dice_sound = aud.Sound('D:\Work\Python\RPG_CLICKER_BLENDER\sound\dice-142528.mp3')
-device = aud.Device()
 
+#SOUND
+device = aud.Device()
 sound_path = os.path.join(base_dir, "sound", "dice-142528.mp3")
 dice_sound = aud.Sound(sound_path) # change for variable
 
 # ICONS
-icon_dir = "D:\Work\Python\RPG_CLICKER_BLENDER\icon"
+cutoms_icon = None
+icon_dir = base_dir, "icon"
 sword_icon = (icon_dir, "Sword.png")
 bow_icon  = (icon_dir, 'bow.png')
 
@@ -106,7 +117,8 @@ class SimplePanel(bpy.types.Panel):
         for slot, item in enumerate(inventory):
             item_name = item["name"] if item else "Empty"
             inventory_box.label(text=f"Slot {slot + 1}: {item_name}")
-
+        
+            
         # Bouton pour ajouter un objet aléatoire
         layout.operator("inventory.add_random_item", text="Roll dice")
         layout.label(text = f"result = {launch}")
@@ -132,6 +144,19 @@ class AddRandomItemOperator(bpy.types.Operator):
         add_random_item_to_inventory()
         return {'FINISHED'}
 
+
+    #### ICON #####
+class ICONS():
+    def load_custom_icon():
+        custom_icons = bpy.utils.previews.new()
+        file_path = os.path.join(icon_dir, sword_icon)
+    
+    """
+    def draw(self, context):
+        #if 'sword' in INVENTORY:
+            #load(file_path)
+    return
+    """  
 # Enregistrement des classes
 def register():
     bpy.utils.register_class(SimplePanel)
@@ -144,18 +169,3 @@ def unregister():
 if __name__ == "__main__":
     register()
 
-
-    #### ICON #####
-class ICONS():
-    def load_custom_icon():
-        custom_icons = bpy.utils.previews.new()
-        file_path = os.path.join(icon_dir, sword_icon)
-    
-    
-    def draw(self, context):
-        #if 'sword' in INVENTORY:
-            #load(file_path)
-        
-        bpy.data.images.load
-        layout.box(bow_icon)
-        
