@@ -62,8 +62,9 @@ items = {
 #from data import items 
 
 #base_dir = os.path.dirname('main')
-base_dir = os.path.dirname(bpy.data.filepath)
+base_dir = os.path.dirname(bpy.data.filepath) #Path for everything
 
+#INVENTORY
 inventory = [None] * 10
 custom_icons = None
 dice = (1 ,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
@@ -77,9 +78,13 @@ dice_sound = aud.Sound(sound_path) # change for variable
 # ICONS
 cutoms_icon = None
 icon_dir = base_dir, "icon"
-sword_icon = (icon_dir, "Sword.png")
-bow_icon  = (icon_dir, 'bow.png')
 
+bow_icon  = (icon_dir, 'bow.png')
+dagger_icon  = (icon_dir, 'dagger.png')
+parchment_icon = (icon_dir, 'parchment.png')
+potion_icon = (icon_dir, 'potion.png')
+ring_icon = (icon_dir, 'ring.png')
+shield_icon = (icon_dir, 'shield.png')
 
     #### ADD RANDOM ITEM ####
 def add_random_item_to_inventory():
@@ -97,7 +102,17 @@ def add_random_item_to_inventory():
                 inventory[i] = random_item
                 break
 
+# add random item
+class AddRandomItemOperator(bpy.types.Operator):
+    bl_idname = "inventory.add_random_item"
+    bl_label = "Roll dice"
 
+    def execute(self, context):
+        #Go use func add_random_item_to_inventory
+        add_random_item_to_inventory() 
+        return {'FINISHED'}
+        
+        
     #### CREATION UI ##### 
 class SimplePanel(bpy.types.Panel):
     bl_label = "RPG_CLICKER"
@@ -105,21 +120,23 @@ class SimplePanel(bpy.types.Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'INVENTORY'
-
+    
+    
+    #Go draw UI
     def draw(self, context):
         layout = self.layout
 
-        # Label principal
+        # Label
         layout.label(text="INVENTORY")
 
-        # Afficher l'inventaire
+        # print inventory
         inventory_box = layout.box()
         for slot, item in enumerate(inventory):
             item_name = item["name"] if item else "Empty"
             inventory_box.label(text=f"Slot {slot + 1}: {item_name}")
         
             
-        # Bouton pour ajouter un objet aléatoire
+        # Button to add random item
         layout.operator("inventory.add_random_item", text="Roll dice")
         layout.label(text = f"result = {launch}")
         
@@ -135,14 +152,6 @@ class SimplePanel(bpy.types.Panel):
                 row_layout.operator("object.select_all", text=f"({row}, {col})")
         """        
         
-# Opérateur pour ajouter un objet aléatoire
-class AddRandomItemOperator(bpy.types.Operator):
-    bl_idname = "inventory.add_random_item"
-    bl_label = "Roll dice"
-
-    def execute(self, context):
-        add_random_item_to_inventory()
-        return {'FINISHED'}
 
 
     #### ICON #####
@@ -157,7 +166,7 @@ class ICONS():
             #load(file_path)
     return
     """  
-# Enregistrement des classes
+#Enregistrer Class
 def register():
     bpy.utils.register_class(SimplePanel)
     bpy.utils.register_class(AddRandomItemOperator)
